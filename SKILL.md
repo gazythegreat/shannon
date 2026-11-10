@@ -1,0 +1,100 @@
+# Shannon — Your whole second brain, in a fraction of the space.
+
+*Named for Claude E. Shannon: the method stores the surprise — the delta in meaning — and points at the rest.*
+
+**Your whole second brain, in a fraction of the space.** Search a large document store through a small, standing **abstract map** — never through a copy of the store. The map holds, per source: one short abstract (lossy, plain language), its **Keys** verbatim (lossless: identifiers, amounts, deadlines), its entities, and a **pointer** to the original. Sources are never copied into the map. Exact wording is fetched live from the original, singly, only when a question needs it. There are no embeddings, no vector store, no text database.
+
+The method is domain-free. Everything domain-specific lives in a **deployment pack**: what counts as a Key, the layer vocabulary, the store root, the tag vocabulary, a typed lay↔technical thesaurus, and a house-terms register. A law firm and a logistics firm run the same procedure with different packs.
+
+## Two modes
+
+This skill has two modes. **Build mode** cards sources into a map (see the card spec below); **search mode** runs the procedure over a finished map. Detection comes first, always: search mode checks for an existing map before anything else, and build mode never re-cards what a current map already covers — it refreshes changed sources only. The skill is self-sufficient end to end: a deployment with no upstream indexes at all still has a complete path, because build mode can card primary sources directly. Upstream producers (audit skills, transcript reconcilers, human-maintained hubs) are accelerators that give build mode better raw material; they are never prerequisites. "Indexing" in this skill means carding — abstracting into the map. It never means duplicating text into a database or vector store.
+
+## Step 0 — Derive the frame (before any build, and whenever a deployment starts)
+
+A delta exists only under a frame: a stipulated answer to *what counts as a change*. The mathematics cannot supply the frame (Bertrand's paradox, Goodman's grue, Watanabe's ugly duckling theorem, Tishby's relevance variable all end at the same place) — and neither can the user's self-report. **Never elicit the frame by asking users what their area, axes, biases or expectations are.** A question whose honest answer costs the answerer something — *are you aware of the frame you impose? what do you really pay attention to?* — returns only the free answer; on exactly the points that matter, self-report is the least reliable evidence there is. The frame is therefore **derived from the record**: from what the user has actually done, chased, corrected, preserved and let drop, across their store and their history with the system. The tiering is the profiler's: stated < revealed. A frame line resting only on the user's description of themself is a stated-tier claim and cannot stand alone. The method is for **anyone organising their own information, in any field or none**; law is one deployment pack among many, never the assumption.
+
+Derive, in this order:
+
+1. **Area and macro environment — from the store itself.** What the store actually contains, and what the user actually does with it, names the area more honestly than any answer: a corpus of pleadings, transcripts and deadlines is a litigation deployment whether or not the user would call it one; a store of plans, commitments, preferences and family documents is a general one. Logistics facts that leave no behavioural trace — where the store root is, who else touches it, what may never leave the machine — may be asked outright: they are facts, not self-assessments, and cannot be profitably faked.
+2. **Axes — from revealed attention.** What counts as a change for this user is what they have historically treated as one: the discrepancies they corrected, the movements they chased within a day, the conflicts they insisted on preserving unsmoothed, the figures they would not let stand rounded, the failure modes they made the system tag. Read the corrections and the follow-ups first — they are the axes with their evidence already attached.
+3. **Holders — from the record.** The people and bodies whose movements the user's history actually tracks (parties, counterparties, a court, the user themself) — not the ones a questionnaire would nominate.
+4. **Present for recognition, not report.** Show the user the derived frame with a pointer to the evidence under each line. Recognition is far harder to fake than self-description — the same reason the search procedure answers lay questions with a candidate set to recognise rather than jargon to recall. The user corrects what the record got wrong; each correction is itself behavioural evidence and is logged as such. A frame line the user merely asserts, against the record or without it, is marked STATED and carries the lowest weight until behaviour confirms it.
+
+Then **counterweight with the market frame.** The derived frame still carries the user's cognitive biases — visible in the record itself once you look: recency (the latest movement overweighted), salience (dramatic reversals noticed, slow drift missed), confirmation (changes that fit the user's theory chased, others let drop), and small-sample certainty (one career's worth of cases mistaken for the field's base rates). The model, having read the field's literature at scale, usually knows things the individual cannot: the field's base rates, which signals conventionally precede real movement and which are noise or posture, how often a declared position is executed on, and the typical causes behind an observed change (including procedural compulsion, which looks like a change of mind and is not). So present the market frame for the derived area — its standard change-events, signal-versus-noise conventions and base rates — as **PROPOSED** entries beside the derived ones, and flag every divergence explicitly. Neither side overrides silently: the record disposes on local evidence (this store, this lingo, these counterparties); the market frame earns its place only as confirmed entries.
+
+Record the outcome as the deployment's **frame**: area, environment, axes, holders, change-event vocabulary — each line marked derived (with its evidence pointer), market-proposed, user-confirmed, or stated-unconfirmed, and versioned additively as it changes. If there is no record yet to derive from (a genuinely new user), run on the market frame alone, fully PROPOSED, plus the logistics facts, and say so wherever a delta is reported; an underived frame must never wear a derived frame's confidence. Derivation is a standing duty, repeated as the record grows — and the recorded delta log is the long-run arbiter between the derived frame and the market's: periodically check which proposed change-events actually preceded real movements in this store, and let that record argue for promotion or demotion of frame entries.
+
+## The artefacts
+
+1. **The map** — three levels. *Atlas* (top: one entry per cluster; small enough to load whole, ~5k tokens) → *cluster summaries* → *cards* (one per source). Connections are **not stored as edges**: they are derived at query time by joining on shared field values (Cluster, Keys, Entities, Tags, Date) — the way a relational join derives a graph from tables.
+2. **The registry / dimension table** — the deployment's canonical list of the things questions are about (in a law practice, a matter registry; in a research corpus, a bibliography of works). It resolves any fragment — a name, a topic, a figure — to the clean key the cards join on.
+3. **The thesaurus** — typed keyword relationships for the domain: lay↔technical pairs, hypernym families, and **siblings with their distinctions spelled out** (expansion uses the family; the answer must keep siblings separate). Every entry is marked AI-proposed or confirmed.
+4. **The house-terms register** — the organisation's private vocabulary: nicknames, codenames, inside jokes, catchphrase-rules. Each entry: term → referent → type (person / matter / rule) → status (proposed / confirmed) → pointer to where it was explained or first used. AI may *propose* entries from recurrence patterns; only an insider confirms. A wrong house-term edge silently corrupts searches, so unconfirmed entries are used as hints, never as facts.
+5. **The position & delta register** — the deployment's record of *meaning in motion*, under the frame stipulated at Step 0. For each holder and axis: the current position (a stance, an opinion, a plan), stated as a proposition; its **evidential basis** — the support under it (documents, testimony, data, commitments) as pointers; and a dated **delta log**. A delta record states: axis · holder · from → to · **direction** (toward / away / hardened / softened / reversed / basis-strengthened / basis-weakened) · **what moved** (the position's wording, the basis, or both — a basis that shifts under unchanged wording is a full delta; a wording that shifts over an unchanged basis is recorded as a rephrase, delta nil) · date · source pointer. Positions are never overwritten: a new position supersedes the old in the log, additively, so the history is the register.
+6. **The trend roll-up** — periodically (and on request), the delta log is read as a time series per holder and axis: trajectory (steady drift, oscillation, sudden reversal, long stillness), rate of movement, and divergence between holders. Trends are second-order deltas — they answer "how has this been moving?" rather than "where does it stand?" — and they are the counterweight to salience and recency bias: slow drift that no single source announces becomes visible only here. A trend is a reading of the log, labelled with the period it covers; it is never a source, and any trend that matters is verified against the delta records under it.
+
+## The search procedure
+
+Run these steps in order. The intelligence lives here, in the procedure — the map is inert data.
+
+1. **House terms first.** Check the question against the register before any ordinary reading. A house term overrides the word's normal meaning ("the Falcon" is a person, not a bird).
+2. **Resolve.** If the question carries a fragment (name, topic, figure), resolve it through the registry to its canonical key(s) before probing. Never search on the raw fragment alone.
+3. **Interpret.** Parse the question — especially a lay one — into an event schema: actor, action, subject, effect, time anchor. A lay question ("the judge told my aunt she cannot continue the proceeding") shares almost no vocabulary with the documents; the schema is the bridge.
+4. **Expand.** Turn the schema into the deployment's technical vocabulary using the thesaurus — the *whole family* (striking out / struck out / dismissed / discontinuance / unless order / case terminated), not one guessed term. For public domains the searching model may extend the family from its own knowledge; mark any term so added as unconfirmed.
+5. **Probe the map mechanically.** Order: Keys (exact) → Entities → Abstracts → Answers lines. Abstracts describe outcomes in narrative words, which sit closer to lay vocabulary than procedural labels do. Use `map_query.py` (in the map directory) so the probing is grep, not impression: `map_query.py <terms...> [--field keys|entities|abstract|answers]`, and `--join "<value>"` to pull every card sharing a key or entity.
+6. **Traverse.** From any one hit, join outward: same key in other layers, same entity in other clusters, same cluster, adjacent dates. A faint-memory question needs only **one hook anywhere in the neighbourhood**; the joins do the rest.
+7. **Drill down only for exactness.** If the answer turns on exact wording, a precise time, or a figure the cards flag as uncertain, follow the card's Source pointer and fetch that one original, live. If a card's abstract records a correction or a conflict, the drill-down is mandatory before answering.
+8. **Abstain and fall back.** If the map yields nothing, say so, and fall back to exact-word grep over the originals in place, using the same expanded term family. Never invent an answer the map does not support; never smooth a conflict the cards preserve.
+9. **Answer in the asker's register.** For a lay asker, return a small candidate set described plainly, with the sibling distinctions spelled out — converting recall (produce the jargon) into recognition (pick from plain descriptions). For an expert asker, lead with keys and pointers.
+
+### Change questions
+
+A question of the form "what changed about X?", "how has Y's position moved?", "is Z's case stronger than it was?" is answered from the **position & delta register first** — that is what it exists for. Procedure: resolve the holder and axis through the registry and frame; read the delta log for that pair in date order; state the current position, then the movements with their dates, directions and what moved (position, basis, or both), each with its source pointer; close with the trend reading if the log supports one. If the frame was never stipulated, or the axis is not in the frame, say so before answering — a delta reported without its frame is a number without a unit. If the register holds no record for the pair, abstain and fall back to the ordinary probe across dated cards, labelling the result as reconstructed-at-query-time rather than recorded.
+
+## When no map is detected — the fallback
+
+Detection: look for the deployment's map at its configured location — atlas, cluster summaries and cards. Absent, empty or unreadable all count as **no map**; there is no partial credit. Then:
+
+1. **Declare it.** Tell the user, in the answer itself, that no map was found and where the skill looked. An unmapped answer must never wear a mapped answer's confidence.
+2. **Degrade in declared tiers**, naming the tier in use:
+   - *Tier 1* — probe the store's native finding aids directly (folder indexes, hubs, the registry), if they exist;
+   - *Tier 2* — exact-word grep over the originals in place, using the expanded term family, scoped by the store's folder structure — naming the expected cost before any large sweep;
+   - *Tier 3* — memory only, labelled as memory, with the capture caveat attached (memory returns only what past work happened to record).
+3. **Offer the remedy; never take it silently.** Propose build mode — sources counted, cost stated — and build only on the deployment owner's go-ahead. A missing map is not a licence to spend tokens uninvited.
+4. **Log the miss.** Record in the deployment's notes that a search ran unmapped, so the gap stays auditable rather than evaporating.
+5. **Never fabricate.** If every tier fails, abstain and say what would be needed (a map build, or a pointer to the right store).
+
+## Card spec (for building or refreshing a map)
+
+One card per source, fixed schema: Title / Source (pointer, relative to the store root, stated once per file) / Layer / Date / Cluster / Abstract (40–55 words, abstracted — never copied sentences; ambiguity and self-contradiction flagged, never smoothed) / Keys (verbatim, semicolon-separated; **Keys outrank any size target**; personal identifiers such as NRICs never go in Keys) / Entities (including nicknames and house terms exactly as heard — a 55-word abstract will drop them, and the register alone cannot be searched by entity joins) / Tags (only the deployment's controlled vocabulary, and only when literally present) / Answers (one line: the questions this source can answer). Cluster summaries (80–150 words per cluster) roll cards up; the atlas rolls summaries up. Card a changed source again when it changes; the map is append-and-correct, never delete (per the deployment's records rules).
+
+## Refresh — keeping the map current (build mode, delta form)
+
+A refresh never rebuilds. Procedure:
+
+1. **Detect the delta.** Compare the store's source sets against the build manifest: files that are new, and files whose size or modification time changed since they were carded. If the store is unreachable, stop, log the skip, and change nothing.
+2. **Card only the delta**, to the same card spec. New sources get new cards (appended as a dated refresh batch). For a changed source, write a NEW card and mark the old card "[Superseded — see refresh of <date>]" — corrections are additive; nothing is deleted or silently overwritten.
+3. **Roll up only what the delta touched**: append a dated addendum to the affected cluster summaries; re-distil the atlas only when a cluster's posture or hardest deadline actually changed.
+4. **Update the manifest** with the new entries and watermarks, and log the run: sources added, sources re-carded, map size before and after. A run with no delta reports nothing.
+5. **Record the semantic deltas.** Where a deployment keeps a position & delta register (artefact 5), compare each newly carded source against the register's current positions for every holder and axis it touches. Where the source moves a position — or moves the evidential basis under an unmoved position — append a delta record (from → to, direction, what moved, date, pointer to the new card). Where the source's wording differs from a registered position but its basis does not, record nothing and note the rephrase in the run log only. A refresh that finds file deltas but no position deltas says so; the absence of movement is itself a reading, and the trend layer depends on stillness being recorded honestly rather than passed over.
+6. Upstream freshness is inherited, never manufactured: a folder layer whose producer (e.g. an audit) has not re-run simply produces no delta — the refresh must not card around a stale producer to disguise that.
+
+## Deployment pack — what one contains
+
+The method ships without a pack; every deployment writes its own, and a real pack is **private to its owner** — it describes their store, their vocabulary and their frame, and is never published with the method. A pack records:
+
+- **Store root** — where the originals live (the custodian is the owner's own disk or store; the map never holds the text).
+- **Map location** — where the atlas, cluster summaries, cards and probe script live.
+- **Registry** — the canonical list the resolve step joins on, and its primary key.
+- **Layers** — the kinds of sources in the store (hubs, indexes, logs, transcripts, records...).
+- **Tags** — the deployment's controlled vocabulary, if any.
+- **Thesaurus** — the typed lay↔technical file for the field (or the general pack).
+- **House terms** — the private-vocabulary register file.
+- **Frame** — the Step 0 derivation: area, environment, axes, holders, change-event vocabulary, each line marked derived / market-proposed / user-confirmed / stated-unconfirmed.
+- **Position & delta register** — where artefact 5 lives, once seeded.
+- **Refresh cadence** — how often the Refresh procedure runs, and where it reports.
+
+## Growing the pack
+
+Every search that succeeds through an unexpected word, and every correction from the asker, is a candidate thesaurus edge or house-term entry: record it as *proposed* with its source pointer, and promote to *confirmed* only on the deployment owner's word. Keep both files small and high-precision — a few hundred verified edges outperform a large auto-generated ontology, which decays into plausible noise and wrong distinctions.
