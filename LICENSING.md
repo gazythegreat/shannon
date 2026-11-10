@@ -1,37 +1,34 @@
-# Licensing — dual licence
+# Licensing
 
-**Shannon** (the skill in `SKILL.md`, with its README) is offered under a
-**dual licence**. You may choose either route; you are not required to take
-both.
+**Shannon** (the skill in `SKILL.md`, with its README) is source-available.
+It is **not** open source, and it is **not** offered under the GPL.
 
-## Route 1 — GNU General Public License v3.0 (free)
+## Noncommercial use — PolyForm Noncommercial 1.0.0
 
-The full text of the GNU GPL v3.0 is in [`LICENSE`](LICENSE). Under it you
-may use, study, modify and redistribute this work — **including
-commercially** — provided you comply with the GPL's copyleft terms: works
-based on this skill that you distribute must themselves be licensed under
-the GPL, with their source made available on the same terms.
+The full text is in [`LICENSE`](LICENSE). Under it you may use, study,
+modify and distribute this work for **noncommercial purposes** — personal
+use, research, study, hobby projects, and use by charitable, educational,
+public research, public safety or health, environmental and government
+organisations — on the licence's terms, free of charge.
 
-If the GPL's terms fit your use, no payment and no further permission are
-needed.
+## Commercial use — paid licence, no exceptions
 
-## Route 2 — Commercial licence (paid)
-
-If you want to use Shannon in a way the GPL does not permit — for example,
-embedding it in a closed-source or proprietary product, or offering it as
-part of a commercial service without GPL obligations attaching to your own
-work — a separate commercial licence is available from the copyright
-holder on paid terms.
+**Any commercial use requires a separate paid commercial licence from the
+copyright holder, in advance.** There are no exceptions: it makes no
+difference whether the product or service built on Shannon is open or
+closed, free to download or sold, or offered as software or as a service.
+If the use is commercial, it is not covered by the PolyForm licence, and a
+commercial licence must be purchased first.
 
 To enquire about a commercial licence, contact the copyright holder via
 the channels listed on the project repository.
 
-## What this is not
+## Earlier versions
 
-This is **not** the Business Source License, the Functional Source
-License, or any other source-available licence: there is no change date
-and no future conversion, because the work is open under the GPL from the
-start. The commercial route exists alongside the GPL route, not instead
-of it — the model used by projects such as Qt and MySQL.
+Versions of Shannon published before this one were offered briefly under
+dual-licence terms including the GNU GPL v3.0. Copies lawfully obtained
+under those terms remain governed by them; this version and all later
+versions are offered only on the terms above.
 
-Copyright © 2026 Raymond Ng. All rights under Route 2 reserved.
+Copyright © 2026 Raymond Ng. All rights not expressly granted above are
+reserved.

@@ -34,6 +34,6 @@ A delta exists only under a frame — a stipulation of what counts as a change �
 
 Copy `SKILL.md` into your agent's skills directory (Agent Skills format). Then let the skill run its Step 0 against your store.
 
-## Licence — dual licence
+## Licence — source-available; commercial use is paid, no exceptions
 
-Shannon is dual-licensed. **Route 1:** free under the GNU GPL v3.0 (full text in `LICENSE`) — use, modify and redistribute, commercially included, under the GPL's copyleft terms. **Route 2:** if you need to use it outside the GPL's terms (for example in a closed-source product), a paid commercial licence is available from the copyright holder. See `LICENSING.md` for both routes.
+Shannon is licensed under the **PolyForm Noncommercial License 1.0.0** (full text in `LICENSE`): free for noncommercial purposes — personal use, research, study, and use by charitable, educational, public research, public safety or health, environmental and government organisations. **Any commercial use requires a paid commercial licence from the copyright holder, in advance, with no exceptions** — whether the product built on Shannon is open or closed, sold or given away, software or a service. See `LICENSING.md`.
