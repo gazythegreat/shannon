@@ -104,3 +104,10 @@ The method ships without a pack; every deployment writes its own, and a real pac
 ## Growing the pack
 
 Every search that succeeds through an unexpected word, and every correction from the asker, is a candidate thesaurus edge or house-term entry: record it as *proposed* with its source pointer, and promote to *confirmed* only on the deployment owner's word. Keep both files small and high-precision — a few hundred verified edges outperform a large auto-generated ontology, which decays into plausible noise and wrong distinctions.
+
+## Version history
+
+- **v1.3 — 14 Nov 2026.** Step 0 refined: asking is permitted where the user wishes to give an answer, preferably on the system's initiative; answers are weighted at the stated tier, and derivation from the record stays primary.
+- **v1.2 — 14 Nov 2026.** Existing-map adoption: a Shannon map already present is adopted and refreshed, never rebuilt ("adopt it, do not rebuild"). The two mapping criteria — the market criteria and the owner's revealed criteria — are named explicitly in Step 0.
+- **v1.1 — 11 Nov 2026.** Licence changed to the PolyForm Noncommercial License 1.0.0: noncommercial use is free; any commercial use requires a paid licence from the copyright holder in advance, no exceptions. (The v1.0 dual-licence wording was withdrawn.)
+- **v1.0 — 11 Nov 2026.** Initial public release.
