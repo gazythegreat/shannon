@@ -4,6 +4,26 @@ All notable changes to the Shannon skill, newest first. The same history is
 kept at the foot of SKILL.md; the repository's commit history is the
 line-by-line record.
 
+## v1.4 — 14 Nov 2026
+
+Dual propositions per card. The card spec now requires both readings to be
+stored in the same card at the same time — never either/or:
+
+- **Market proposition** — one line: what the market frame takes the source
+  to establish or move, resting on a named frame entry, marked
+  market-proposed or confirmed.
+- **Owner proposition** — one line: what the source establishes or moves
+  under the owner's frame (their objective, position, exposure or standing
+  concern), marked derived (with evidence pointer), stated, or
+  user-confirmed.
+
+Both fields are mandatory; where a frame yields no movement the field
+records "No movement under this frame" expressly — an omitted field is a
+defective card. The two readings may agree, diverge, or move independently;
+a divergence on one card is itself a finding and is preserved. Propositions
+are readings under a frame, never source content: they never enter Keys and
+are never quoted as the source's own words.
+
 ## v1.3 — 14 Nov 2026
 
 Step 0 refined: asking is permitted where the user wishes to give an answer,
